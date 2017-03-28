@@ -1,0 +1,18 @@
+{
+	"name": "openstack-operations-poc",
+	"private": true,
+	"version": "0.1.0",	
+	"main": "server.js",
+	"scripts": {
+		    "start": "node server.js"
+	 },
+	"dependencies": {
+		"angular-ui-router": "^0.4.2",
+		"cassandra-driver": "^3.2.0",
+		"node-excel-export": "^1.2.0", 
+		"express": "^4.14.1",
+		"bower": "1.8.0",
+		"http-server": "^0.9.0",
+		"elasticsearch": "12.1.3"
+	}
+}
