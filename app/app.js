@@ -2,7 +2,8 @@
 'use strict';
 
 var app = angular.module("kdsLogsApp",
-    ['ngResource', 'ngRoute', 'services.service', 'dashboardLayout']) ;
+    ['ngResource', 'ngRoute', 'services.service',
+    'dashboardLayout','dashboardComponent']) ;
 
 app.config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {

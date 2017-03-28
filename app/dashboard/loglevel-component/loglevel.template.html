@@ -1,0 +1,49 @@
+<div class="col-md-12">
+	<div class="card-pf card-pf-utilization" style="">
+		<div class="card-pf-heading">
+			<p class="card-pf-heading-details"></p>
+			<h2 class="card-pf-title" style="">Loglevel</h2>
+		</div>
+		<div class="card-pf-body" style="">
+			<div class="row">
+				<div class="col-xs-12 col-sm-4 col-md-4">
+					<h3 class="card-pf-subtitle">Error</h3>
+					<p class="card-pf-utilization-details">
+						<span class="card-pf-utilization-card-details-count">{{ $ctrl.error}}%</span> <span
+							class="card-pf-utilization-card-details-description"> &nbsp;<span
+							class="card-pf-utilization-card-details-line-1"></span>
+							<span class="card-pf-utilization-card-details-line-2">of
+								{{$ctrl.total}} Messages</span>
+						</span>
+					</p>
+					<div id="chart-pf-donut-error"></div>
+				</div>
+							<div class="col-xs-12 col-sm-4 col-md-4">
+					<h3 class="card-pf-subtitle">Info</h3>
+					<p class="card-pf-utilization-details">
+						<span class="card-pf-utilization-card-details-count">{{ $ctrl.info}}%</span> <span
+							class="card-pf-utilization-card-details-description"> <span
+							class="card-pf-utilization-card-details-line-1">&nbsp;</span>
+							<span class="card-pf-utilization-card-details-line-2">of
+								{{$ctrl.total}} Messages</span>
+						</span>
+					</p>
+					<div id="chart-pf-donut-info"></div>
+				</div>
+							<div class="col-xs-12 col-sm-4 col-md-4">
+					<h3 class="card-pf-subtitle">Warning</h3>
+					<p class="card-pf-utilization-details">
+						<span class="card-pf-utilization-card-details-count">{{ $ctrl.warning}}%</span> <span
+							class="card-pf-utilization-card-details-description"> <span
+							class="card-pf-utilization-card-details-line-1">&nbsp;</span>
+							<span class="card-pf-utilization-card-details-line-2">of
+								{{$ctrl.total}} Messages</span>
+						</span>
+					</p>
+					<div id="chart-pf-donut-warn"></div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>

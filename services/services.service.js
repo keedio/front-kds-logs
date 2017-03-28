@@ -11,12 +11,12 @@ service.getTopLogs = getTopLogs;
 module.exports = service;
 
 
-function getLogLevelCounts(){
+function getLogLevelCounts(during, service){
     var deferred = Q.defer();
    
     client.search({
     	  index: 'kdslogs',
-    	  type: 'YARN',
+    	  type: service,
     	  body:{
 		  "aggs": {
 		        "loglevel": {
@@ -30,7 +30,7 @@ function getLogLevelCounts(){
 	            "range" : {
 	                "datetime" : {
 	                	
-	                	"gte": "2017-02-01", 
+	                	"gte": "2015-02-01", 
 	                    "lte": "2018",
 	                    "format": "yyyy-MM-dd||yyyy"
 	                }
@@ -43,22 +43,22 @@ function getLogLevelCounts(){
     return deferred.promise;
 };
 
-function getTopHostNames(){
+function getTopHostNames(during, service){
     var deferred = Q.defer();
    
     client.search({
     	  index: 'kdslogs',
-    	  type: 'YARN',
+    	  type: service,
     	  body:{
     		  "aggs": {
-			    "hostname": {
+			    "loglevel": {
 			      "terms": {
-			        "field": "hostname"
+			        "field": "level"
 			      },
 			      "aggs": {
-			        "loglevel": {
+			        "hostname": {
 			          "terms": {
-			            "field": "level"
+			            "field": "hostname"
 			          }         
 			        }
 			      }
@@ -69,7 +69,7 @@ function getTopHostNames(){
 	            "range" : {
 	                "datetime" : {
 	                	
-	                	"gte": "2017-02-01", 
+	                	"gte": "2015-02-01", 
 	                    "lte": "2018",
 	                    "format": "yyyy-MM-dd||yyyy"
 	                }
@@ -82,12 +82,12 @@ function getTopHostNames(){
     return deferred.promise;
 };
 
-function getTopLogs(){
+function getTopLogs(during, service){
     var deferred = Q.defer();
    
     client.search({
     	  index: 'kdslogs',
-    	  type: 'YARN',
+    	  type: service,
     	  body:{
 			  "aggs": {
 				  "thread" : {

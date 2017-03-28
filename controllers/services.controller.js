@@ -13,7 +13,7 @@ module.exports = router;
 
 function getLogLevelCounts(req, res) {
 
-	servicesService.getLogLevelCounts()
+	servicesService.getLogLevelCounts(req.query.during ,req.query.service)
 		.then(function(data) {
 			if (data)
 				res.send(data);
@@ -28,7 +28,7 @@ function getLogLevelCounts(req, res) {
 
 function getTopHostNames(req, res) {
 	
-	servicesService.getTopHostNames()
+	servicesService.getTopHostNames(req.query.during ,req.query.service)
 		.then(function(data) {
 			if (data)
 				res.send(data);
@@ -43,7 +43,7 @@ function getTopHostNames(req, res) {
 
 function getTopLogs(req, res) {
 	
-	servicesService.getTopLogs()
+	servicesService.getTopLogs(req.query.during ,req.query.service)
 		.then(function(data) {
 			if (data)
 				res.send(data);

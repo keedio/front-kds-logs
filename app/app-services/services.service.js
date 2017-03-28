@@ -9,28 +9,36 @@ var app = angular.module('services.service', ['ngResource']);
     function Service($http, $q) {
         var service = {};
 
-        service.GetServicesBy = GetServicesBy;
-        service.GetStackedServicesBy = GetStackedServicesBy;
-
+        service.GetTopHostNames = GetTopHostNames;
+        service.GetTopLogs = GetTopLogs;
+        service.GetLogLevelCounts = GetLogLevelCounts;
 
         return service;
 
-        function GetServicesBy(during) {
+        function GetLogLevelCounts(during,service) {
             return  $http({
-                url: '/services/getServicesBy',
+                url: '/services/getLogLevelCounts',
                 method: "GET",
-                params: {during: during}
+                params: {during: during, service: service}
             }).then(handleSuccess, handleError);
         }
 
-        function GetStackedServicesBy(during,region) {
+        function GetTopHostNames(during,service) {
             return  $http({
-                url: '/services/getStackedServicesBy',
+                url: '/services/getTopHostNames',
                 method: "GET",
-                params: {during: during, region: region}
+                params: {during: during, service: service}
             }).then(handleSuccess, handleError);
         }
 
+        function GetTopLogs(during,service) {
+            return  $http({
+                url: '/services/getTopLogs',
+                method: "GET",
+                params: {during: during, service: service}
+            }).then(handleSuccess, handleError);
+        }
+        
         function handleSuccess(res) {
             return res.data;
         }
