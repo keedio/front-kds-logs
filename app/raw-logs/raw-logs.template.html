@@ -1,0 +1,96 @@
+
+<style>
+p {
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.overflow-ellipsis {
+	padding-top: 7px;
+	text-overflow: ellipsis;
+}
+</style>
+<div class="container-fluid">
+	<div class="row toolbar-pf">
+		<form>
+			<select-raw-logs-group></select-raw-logs-group>
+		</form>
+
+	</div>
+	<!-- /row -->
+</div>
+<div class="container-fluid">
+	<div class="list-group list-view-pf list-view-pf-view">
+		<form class="content-view-pf-pagination  clearfix"
+			style="border: 0px;" ng-show=" $ctrl.rawlogs.length > 0 ">
+			<div class="form-group">
+				<h5>Export all: &nbsp;</h5>
+				<span> <a href="" ng-click="$ctrl.export()"><span
+						class="pficon-export"></span></a>
+				</span>
+			</div>
+			<div class="form-group">
+				<span><span class="pagination-pf-items-current">Page </span>
+					<span class="pagination-pf-items-total"> {{$ctrl.actualIndex / $ctrl.size
+						}}</span></span>
+				<ul class="pagination pagination-pf-back">
+
+					<li ng-show="$ctrl.actualIndex - $ctrl.size > 1"><a
+						ng-click="$ctrl.previous()" title="Previous Page"><span
+							class="i fa fa-angle-left"></span></a></li>
+				</ul>
+				<ul class="pagination pagination-pf-forward">
+					<li><a ng-click="$ctrl.next()" title="Next Page"><span
+							class="i fa fa-angle-right"></span></a></li>
+				</ul>
+			</div>
+		</form>
+		<div class="list-group-item" ng-repeat="log in $ctrl.rawlogs">
+			<div class="list-group-item-header">
+				<div class="list-view-pf-expand">
+					<span class="fa fa-angle-right"></span>
+				</div>
+				<div class="list-view-pf-main-info" id="wrapper">
+					<div class="list-view-pf-body">
+						<div class="list-view-pf-description" style="min-width: 0">
+							<div class="list-group-item-text">
+								<p class="overflow-ellipsis">{{log._source}}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="list-group-item-container container-fluid hidden">
+				<div class="close">
+					<span class="pficon pficon-close"></span>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<dl class="dl-horizontal">
+							<dt>Log Level</dt>
+							<dd>
+								<span ng-class="$ctrl.loglevelClass(log._source.level)"></span>&nbsp; {{log._source.level}}
+							</dd>
+							<dt>Date</dt>
+							<dd>{{log._source.datetime}}</dd>
+							<dt>Service</dt>
+							<dd>{{log._type }}</dd>
+							<dt>Timezone</dt>
+							<dd>{{log._source.timezone }}</dd>
+							<dt>Hostname</dt>
+							<dd>{{log._source.hostname }}</dd>
+							<dt>Thread</dt>
+							<dd>{{log._source.log.thread}}</dd>
+							<dt>Fqcn</dt>
+							<dd>{{log._source.log.fqcn}}</dd>
+							<dt>Pay Load</dt>
+							<dd>{{log._source.log.payload}}</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+</div>

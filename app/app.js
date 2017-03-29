@@ -3,7 +3,7 @@
 
 var app = angular.module("kdsLogsApp",
     ['ngResource', 'ngRoute', 'services.service',
-    'dashboardLayout','dashboardComponent']) ;
+    'dashboardLayout','dashboardComponent','rawLogs']) ;
 
 app.config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
@@ -15,6 +15,11 @@ app.config(['$routeProvider', '$locationProvider',
         }).
         when('/index', {
             template: '<dashboard-component></monitor-component>',
+
+        }).
+
+        when('/rawlogs', {
+            template: '<raw-logs></raw-logs>',
 
         }).
         otherwise('/');

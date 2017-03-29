@@ -6,7 +6,7 @@ var  http = require('http');
 var app = express().use(express.static('app'));
 
 app.use('/services', require('./controllers/services.controller'));
-
+app.use('/rawlogs', require('./controllers/raw.logs.controller'));
 
 app.get('/*', function  (req, res) {
     res.status(404, {status: 'not found'});
