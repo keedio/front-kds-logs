@@ -18,31 +18,19 @@ app.component('loglevelComponent', {
 			initController();
 
 			function initController() {
-				ServicesService.GetLogLevelCounts(new Date(), 'YARN')
+				ServicesService.GetLogLevelCounts('1h', 'flume')
 					.then(function(data) {						
 						parseData (data);
 					});
 			}
-			function insertMissingData (data){
-				var keys = ['error', 'info', 'warning'];
-				var contains = false;
-				for (var k in keys){
-					contains = false;
-					jQuery.each(data, function(i, loglevel) {
-						if(keys[k] == loglevel.key){
-							contains = true;
-							return;
-						}
-							
-					});
-					if (!contains) data.push({ 'key': keys[k], 'doc_count': 0});
-				}
+			$rootScope.$on('refreshLogLevel', function(event, args) {				
+				parseData (args);						
+			});
+			
 
-				return data;
-			}
 			
 			function parseData(data){
-				var buckets = data.aggregations.loglevel.buckets.length != 3 ? insertMissingData (data.aggregations.loglevel.buckets) : data.aggregations.loglevel.buckets;
+				var buckets = data.aggregations.loglevel.buckets.length != 3 ? insertMissingLogData (data.aggregations.loglevel.buckets) : data.aggregations.loglevel.buckets;
 				var total = data.hits.total;
 				self.total = total;
 				jQuery.each(buckets, function(i, loglevel) {

@@ -24,11 +24,12 @@ app.component('rawLogs',{
             };
             self.servicesEntries  = {
                 availableOptions: [
-                    {id: 'YARN', name: 'Yarn'},
-                    {id: 'KAFKA', name: 'Kafka'}
+                    {id: 'yarn', name: 'Yarn'},
+                    {id: 'zookeeper', name: 'Zookeeper'},
+                    {id: 'flume', name: 'Flume'},
                 ],
                 selectedOption : {
-					id : 'YARN',
+					id : 'yarn',
 					name : 'Yarn'
 				}
             };
@@ -46,7 +47,7 @@ app.component('rawLogs',{
 
             self.getRawLogsBy = function  () {
                 var filters = serializeForm();
-                RawLogsService.GetRawLogsBy(filters, self.actualIndex, self.size).then(function ( data) {
+                RawLogsService.GetRawLogsBy(filters, 0, self.size).then(function ( data) {
                     self.rawlogs =  data.hits.hits;
   
                     self.actualIndex = self.size;
@@ -131,7 +132,7 @@ app.component('rawLogs',{
                 return  {
                   
                     loglevel : self.logLevel.selectedOption != undefined && self.logLevel.selectedOption != '' ? splitSelectedOtions(self.logLevel.selectedOption) : undefined,                  
-                    service : self.servicesEntries.selectedOption != undefined && self.servicesEntries.selectedOption != ''? splitSelectedOtions(self.servicesEntries.selectedOption) : undefined,
+                    service : self.servicesEntries.selectedOption != undefined && self.servicesEntries.selectedOption != ''? self.servicesEntries.selectedOption.id : undefined,
                     'log.payload' : self.payLoad != '' ? self.payLoad : undefined,
                     'log.thread' : self.thread != '' ? self.thread : undefined,
                     'log.fqcn' : self.fqcn != '' ? self.fqcn : undefined,

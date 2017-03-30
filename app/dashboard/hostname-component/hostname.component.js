@@ -15,13 +15,18 @@ app.component('hostnameComponent', {
 			initController();
 
 			function initController() {
-				ServicesService.GetTopHostNames(new Date(), 'YARN')
+				ServicesService.GetTopHostNames('1h', 'flume')
 					.then(function(data) {
 						parseData(data);
 					});
 			}
+			
+			$rootScope.$on('refreshTopHostnames', function(event, args) {				
+				parseData(args);		
+			});
+			
 			function insertMissingData(data) {
-				var keys = [ 'error', 'info', 'warning' ];
+				var keys = [ 'error', 'info', 'warn' ];
 				var contains = false;
 				for (var k in keys) {
 					contains = false;

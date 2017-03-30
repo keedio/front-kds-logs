@@ -12,7 +12,8 @@ var app = angular.module('services.service', ['ngResource']);
         service.GetTopHostNames = GetTopHostNames;
         service.GetTopLogs = GetTopLogs;
         service.GetLogLevelCounts = GetLogLevelCounts;
-
+        service.GetRealTimeLogLevel = GetRealTimeLogLevel;
+        
         return service;
 
         function GetLogLevelCounts(during,service) {
@@ -36,6 +37,14 @@ var app = angular.module('services.service', ['ngResource']);
                 url: '/services/getTopLogs',
                 method: "GET",
                 params: {during: during, service: service}
+            }).then(handleSuccess, handleError);
+        }
+        
+        function GetRealTimeLogLevel(service) {
+            return  $http({
+                url: '/services/getRealTimeLogLevelService',
+                method: "GET",
+                params: {service: service}
             }).then(handleSuccess, handleError);
         }
         

@@ -60,9 +60,9 @@ function  getAllRawLogsBy(filters) {
 
 function generatElasticsearchQuery(filters){
 	var obj = []
-	console.log(filters)
+	
 	for (var filter in filters){
-		console.log(filter)
+		
 		if(filter == 'loglevel')
 			obj.push ({"terms":  {"level": filters[filter] }})
 		else if(filter == "log.thread" || filter == "log.fqcn"|| filter == "log.payload")

@@ -69,7 +69,8 @@
 <script src="bower_components/google-code-prettify/bin/prettify.min.js"></script>
 
 <!-- MatchHeight - Used to make sure dashboard cards are the same height -->
-<script src="bower_components/matchHeight/dist/jquery.matchHeight-min.js"></script>
+<script
+	src="bower_components/matchHeight/dist/jquery.matchHeight-min.js"></script>
 <!-- Angular -->
 <script src="bower_components/angular/angular.min.js"></script>
 <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -97,14 +98,18 @@
 <script src="dashboard/loglevel-component/loglevel.component.js"></script>
 <script src="dashboard/hostname-component/hostname.component.js"></script>
 <script src="dashboard/log-component/log.component.js"></script>
-<script src = "raw-logs/raw-logs.component.js"></script>
+<script src="raw-logs/raw-logs.component.js"></script>
+<script src="real-time/realtime.component.js"></script>
 </head>
 
 <body class="cards-pf">
 	<dashboard-layout></dashboard-layout>
 	<div
 		class="container-fluid container-cards-pf container-pf-nav-pf-vertical nav-pf-persistent-secondary">
-		<refresh-dashboard></refresh-dashboard>		
+		<div class="actions pull-right" id="refreshDiv">
+			<a href="" id="refreshLink"><span class="pficon pficon-refresh"></span>
+				Refresh Results &nbsp; <span id="refreshTimer">60</span></a>
+		</div>
 		<div ng-view></div>
 	</div>
 	<script>

@@ -1,14 +1,12 @@
 <div class="form-group">
 	<span>Service: </span> &nbsp; <select class="selectpicker"
-		ng-model="$ctrl.regionEntries.selectedOption"
-		id="regionNodesEntry"
-		ng-options="option.name for option in $ctrl.regionEntries.availableOptions track by option.id"
-		multiple
-		ng-change="$ctrl.updateNodes($ctrl.logEntries.selectedOption.id, $ctrl.regionEntries.selectedOption, $ctrl.duringEntries.selectedOption.id)"></select>
+		ng-model="$ctrl.servicesEntries.selectedOption"
+		ng-options="option.name for option in $ctrl.servicesEntries.availableOptions track by option.id"
+		ng-change="$ctrl.refreshDashboard($ctrl.duringEntries.selectedOption.id , $ctrl.servicesEntries.selectedOption.id)"></select>
 </div>
 <div class="form-group">
 	<span>During: </span> &nbsp; <select class="selectpicker" 
 		ng-model="$ctrl.duringEntries.selectedOption" id="duringNodesEntry"
 		ng-options="option.name for option in $ctrl.duringEntries.availableOptions track by option.id"
-		ng-change="$ctrl.updateNodes($ctrl.logEntries.selectedOption.id, $ctrl.regionEntries.selectedOption, $ctrl.duringEntries.selectedOption.id )"></select>
+		ng-change="$ctrl.refreshDashboard($ctrl.duringEntries.selectedOption.id , $ctrl.servicesEntries.selectedOption.id)"></select>
 </div>

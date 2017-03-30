@@ -61,6 +61,24 @@ function generateBarChart(values, hostnames, loglevel) {
 
 }
 
+function insertMissingLogData (data){
+	var keys = ['error', 'info', 'warn'];
+	var contains = false;
+	for (var k in keys){
+		contains = false;
+		jQuery.each(data, function(i, loglevel) {
+			if(keys[k] == loglevel.key){
+				contains = true;
+				return;
+			}
+				
+		});
+		if (!contains) data.push({ 'key': keys[k], 'doc_count': 0});
+	}
+
+	return data;
+}
+
 function generatePieChart(log, data) {
 	var c3ChartDefaults = $().c3ChartDefaults();
 
@@ -76,19 +94,22 @@ function generatePieChart(log, data) {
 	pieChartRightConfig.data = pieData;
 	pieChartRightConfig.legend = {
 		show : true,
-		position : log == 'thread' ? 'right' : 'bottom'
+		position :  'bottom'
 	};
 	pieChartRightConfig.size = {
-		width : log == 'thread' ? 450 : 550,
-		height : log == 'thread' ? 300 : 300
+		minwidth : log == 'thread' ? 450 : 550,
+		maxwidth : log == 'thread' ? 450 : 550,
+		minheight : log == 'thread' ? 300 : 300,
+		maxheight : log == 'thread' ? 300 : 300
 	};
 	var pieChartRightLegend = c3.generate(pieChartRightConfig);
 
 
 }
+var pattern = [ '#4ABDAC', '#FC4A1A', '#F7B733', '#B37D43', '#E24E42', '#E9B000', '#008F95', '#EB6E80',"#3f9c35","#EC7A08" ,'#07889b','#e37222', '#CD5360'];
+
 function generateRandomColors(data) {
-	var ret = {};
-	var pattern = [ '#4ABDAC', '#FC4A1A', '#F7B733', '#B37D43', '#E24E42', '#E9B000', '#008F95', '#EB6E80',"#3f9c35","#EC7A08" ,'#07889b','#e37222', '#CD5360']
+	var ret = {};	
 	var selected = [];
 	for (var d in data) {
 		var key = data[d][0];
@@ -105,4 +126,31 @@ function generateRandomColors(data) {
 		ret[key] = pattern[random];
 	}
 	return ret;
+}
+
+function generateLineChart (id, data){
+	var splineChartConfig = $().c3ChartDefaults().getDefaultLineConfig();
+	  splineChartConfig.bindto = '#'+id;
+	 
+	  splineChartConfig.data = {
+	    columns: data,
+	    type: 'spline'
+	  };
+	  splineChartConfig.color = {
+				pattern : pattern
+			};
+	  var splineChart = c3.generate(splineChartConfig);
+}
+
+function generateSparkLineChart(id, data){
+	
+	  var c3ChartDefaults = $().c3ChartDefaults();
+	  var sparklineChartConfig = c3ChartDefaults.getDefaultSparklineConfig();
+	  sparklineChartConfig.bindto = '#'+id;
+	  sparklineChartConfig.data = {
+	    columns: data,
+	    type: 'area'
+	  };
+	  var sparklineChart = c3.generate(sparklineChartConfig);
+
 }

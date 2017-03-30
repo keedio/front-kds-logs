@@ -7,9 +7,24 @@ var servicesService = require('../services/services.service');
 router.get('/getLogLevelCounts', getLogLevelCounts);
 router.get('/getTopHostNames', getTopHostNames);
 router.get('/getTopLogs', getTopLogs);
-
+router.get('/getRealTimeLogLevelService',getRealTimeLogLevelService)
 module.exports = router;
 
+
+function getRealTimeLogLevelService(req, res) {
+
+	servicesService.getRealTimeLogLevelService(req.query.service)
+		.then(function(data) {
+			if (data)
+				res.send(data);
+			else
+				res.sendStatus(404);
+
+		})
+		.catch(function(err) {
+			res.status(400).send(err);
+		});
+}
 
 function getLogLevelCounts(req, res) {
 
