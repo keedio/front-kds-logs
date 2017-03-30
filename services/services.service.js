@@ -85,7 +85,7 @@ function getTopHostNames(during, service){
 
 function  getRealTimeLogLevelService(service){
     var deferred = Q.defer();
-    var dates = parseDates('6h');
+    var dates = parseDates('1h');
     client.search({
     	  index: 'kdslogs',
     	  type: service,
