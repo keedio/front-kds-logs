@@ -2,7 +2,7 @@ function generateDonutChart(loglevel, value, total) {
 	var donutConfig = $().c3ChartDefaults().getDefaultDonutConfig('A');
 	donutConfig.bindto = '#chart-pf-donut-' + loglevel;
 	donutConfig.color = {
-		pattern : loglevel == 'info' ? [ "#3f9c35", "#D1D1D1" ] : loglevel == 'error' ? [ "#cc0000", "#D1D1D1" ] : [ "#EC7A08", "#D1D1D1" ]
+		pattern : loglevel == 'info' ? [ "#4ABDAC", "#D1D1D1" ] : loglevel == 'error' ? [ "#FC4A1A", "#D1D1D1" ] : [ "#F7B733", "#D1D1D1" ]
 	};
 	donutConfig.data = {
 		type : "donut",
@@ -48,7 +48,7 @@ function generateBarChart(values, hostnames, loglevel) {
 		}
 	};
 	verticalBarChartConfig.color = {
-			pattern : loglevel == 'info' ? [ "#3f9c35", "#D1D1D1" ] : loglevel == 'error' ? [ "#cc0000", "#D1D1D1" ] : [ "#EC7A08", "#D1D1D1" ]
+			pattern : loglevel == 'info' ? [ "#4ABDAC", "#D1D1D1" ] : loglevel == 'error' ? [ "#FC4A1A", "#D1D1D1" ] : [ "#F7B733", "#D1D1D1" ]
 		};
 	verticalBarChartConfig.size = {
 		height : 275
@@ -106,7 +106,7 @@ function generatePieChart(log, data) {
 
 
 }
-var pattern = [ '#4ABDAC', '#FC4A1A', '#F7B733', '#B37D43', '#E24E42', '#E9B000', '#008F95', '#EB6E80',"#3f9c35","#EC7A08" ,'#07889b','#e37222', '#CD5360'];
+var pattern = [ '#FC4A1A', '#4ABDAC', '#F7B733', '#B37D43', '#E24E42', '#E9B000', '#008F95', '#EB6E80',"#3f9c35","#EC7A08" ,'#07889b','#e37222', '#CD5360'];
 
 function generateRandomColors(data) {
 	var ret = {};	
@@ -131,11 +131,45 @@ function generateRandomColors(data) {
 function generateLineChart (id, data){
 	var splineChartConfig = $().c3ChartDefaults().getDefaultLineConfig();
 	  splineChartConfig.bindto = '#'+id;
-	 
+	  
+	  var lineChartDataColumns = [
+		    ['data1', 30, 200, 100, 400, 150, 250],
+		    ['data2', 50, 220, 310, 240, 115, 25],
+		    ['data3', 70, 100, 390, 295, 170, 220],
+		    ['data4', 10, 340, 30, 290, 35, 20],
+		    ['data5', 0]
+		  ];
+
+
+	  var xaxis = function (date){
+		  var ini = new Date();
+		  var fin = new Date(new Date().setHours(ini.getHours()+1));
+		  var dates = ['x'];
+		  do{
+			  var aux = new Date(ini.setMinutes(ini.getMinutes()+1));
+			  dates.push(new Date(aux));
+			  
+		  }while(aux<fin);
+		  
+		  return dates;
+	  }
+	  data.push(xaxis(new Date()));
 	  splineChartConfig.data = {
-	    columns: data,
-	    type: 'spline'
-	  };
+			  	x: 'x',
+			    columns: data,
+			    type: 'spline'
+			  };
+	  
+	  splineChartConfig.axis= {
+		        x: {
+		            type: 'timeseries',
+		            tick: {
+		                format: '%H:%m'
+		            },
+		            max: new Date(new Date().setHours(new Date().getHours()+1))
+		        }
+		    }
+	 
 	  splineChartConfig.color = {
 				pattern : pattern
 			};
