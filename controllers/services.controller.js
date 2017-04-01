@@ -8,7 +8,7 @@ router.get('/getLogLevelCounts', getLogLevelCounts);
 router.get('/getTopHostNames', getTopHostNames);
 router.get('/getTopLogs', getTopLogs);
 router.get('/getRealTimeLogLevelService',getRealTimeLogLevelService)
-router.get('/test',test)
+
 module.exports = router;
 
 
@@ -72,18 +72,5 @@ function getTopLogs(req, res) {
 		});
 }
 
-function test(req, res) {
 
-	servicesService.test()
-		.then(function(data) {
-			if (data)
-				res.send(data);
-			else
-				res.sendStatus(404);
-
-		})
-		.catch(function(err) {
-			res.status(400).send(err);
-		});
-}
 

@@ -8,7 +8,7 @@ service.getLogLevelCounts = getLogLevelCounts;
 service.getTopHostNames = getTopHostNames;
 service.getTopLogs = getTopLogs;
 service.getRealTimeLogLevelService = getRealTimeLogLevelService;
-service.test = test;
+
 module.exports = service;
 
 
@@ -97,8 +97,8 @@ function getRealTimeLogLevelService(service) {
 			(HH > 9 ? '' : '0') + HH
 		].join('');
 	};
-	var date = new Date().hourFormated();
-	
+	var from = new Date();
+	var to = new Date(new Date().setHours(from.getHours()+1));
 	client.search({
 		index : 'kdslogs',
 		type : service,
@@ -106,7 +106,8 @@ function getRealTimeLogLevelService(service) {
 			"aggs" : {
 				"loglevel" : {
 					"terms" : {
-						"field" : "level"
+						"field" : "level",
+						"min_doc_count" : 0
 					},
 					"aggs" : {
 						"service_level_interval" : {
@@ -114,7 +115,12 @@ function getRealTimeLogLevelService(service) {
 								"field" : "datetime",
 								"interval" : "1m",
 								"format" : "yyyy-MM-dd HH:mm:ss",
-								"min_doc_count" : 0
+								"min_doc_count" : 0,
+					            "extended_bounds" : { 
+					                "min" : from.hourFormated()+':00:00',
+					                "max" : to.hourFormated()+':00:00'
+					                
+					            }
 							}
 						}
 					}
@@ -123,7 +129,7 @@ function getRealTimeLogLevelService(service) {
 			"query" : {
 				"range" : {
 					"datetime" : {
-						"gte" : date,
+						"gte" : from.hourFormated(),
 						"format" : "yyyy-MM-dd HH"
 					}
 				}
@@ -175,7 +181,7 @@ function getTopLogs(during, service) {
 					"datetime" : {
 						"gte" : dates[0],
 						"lte" : dates[1],
-						"format" : "yyyy-MM-dd HH:mm:ss|| yyyy-MM-dd HH:mm:ss"
+						"format" : "yyyy-MM-dd HH:mm:ss"
 					}
 				}
 			}
@@ -187,44 +193,7 @@ function getTopLogs(during, service) {
 }
 ;
 
-function test(during, service) {
-	var deferred = Q.defer();
-	var dates = parseDates(during);
-	client.search({
-		index : 'kdslogs',
-		type : service,
-		body : {
-			"aggs" : {
-				"loglevel" : {
-					"terms" : {
-						"field" : "level"
-					},
-					"aggs" : {
-						"service_level_interval" : {
-							"date_histogram" : {
-								"field" : "datetime",
-								"interval" : "30s",
-								"format" : "yyyy-MM-dd HH:mm:ss"
-							}
-						}
-					}
-				}
-			},
-			"query" : {
-				"range" : {
-					"datetime" : {
-						"gte" : "2017-03-31 07",
-						"format" : "yyyy-MM-dd HH"
-					}
-				}
-			}
-		}
-	}, function(err, response) {
-		deferred.resolve(response);
-	});
-	return deferred.promise;
-}
-;
+
 
 function parseDates(during) {
 	Date.prototype.formated = function() {

@@ -24,7 +24,7 @@ function getLogLevelCounts() {
 	};
 	var levels = [ 'ERROR', 'INFO', 'WARN' ];
 	var services = ['zookeeper','flume','yarn'];
-	var hostname = Math.floor((Math.random() * 1) + 10);
+	var hostname = Math.floor((Math.random() * 10));
 	client.create({
 		index : 'kdslogs',
 		type : services[Math.floor((Math.random() * 3))],

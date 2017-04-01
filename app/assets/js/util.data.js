@@ -78,7 +78,54 @@ function insertMissingLogData (data){
 
 	return data;
 }
+function generateStackedBars(id, data){
+	  var c3ChartDefaults = $().c3ChartDefaults();
 
+	  var stackedGroups = [['flume', 'zookeeper', 'yarn']];
+	  
+
+	  var xaxis = function (date){
+		  var ini = new Date(new Date().setMinutes(0));
+		  var fin = new Date(new Date().setHours(ini.getHours()+1));
+		  fin = new Date(fin.setMinutes(0));
+		  var dates = ['x'];
+		  do{
+			  var aux = new Date(ini.setMinutes(ini.getMinutes()+1));
+			  dates.push(new Date(aux));
+			  
+		  }while(aux<fin);
+		  
+		  return dates;
+	  }
+	  var dates = xaxis(new Date());
+	  data.push(dates);
+	  var stackedVerticalBarChartConfig = c3ChartDefaults.getDefaultStackedBarConfig();
+	  stackedVerticalBarChartConfig.axis= {
+		        x: {
+		            type: 'timeseries',
+		            tick: {
+		                format: '%H:%M'
+		            },
+		            
+		            max: dates[61]
+		        },
+		        y: {
+		            min: 0
+		          }
+		    }
+	  stackedVerticalBarChartConfig.bindto = '#'+id;
+	  stackedVerticalBarChartConfig.color = {
+				pattern : pattern
+			};
+	  stackedVerticalBarChartConfig.data = {
+	    columns: data,
+	    groups: stackedGroups,
+	    type: 'bar',
+	    x:'x'
+	    
+	  };
+	  var stackedVerticalBarChart = c3.generate(stackedVerticalBarChartConfig);
+}
 function generatePieChart(log, data) {
 	var c3ChartDefaults = $().c3ChartDefaults();
 
@@ -131,19 +178,11 @@ function generateRandomColors(data) {
 function generateLineChart (id, data){
 	var splineChartConfig = $().c3ChartDefaults().getDefaultLineConfig();
 	  splineChartConfig.bindto = '#'+id;
-	  
-	  var lineChartDataColumns = [
-		    ['data1', 30, 200, 100, 400, 150, 250],
-		    ['data2', 50, 220, 310, 240, 115, 25],
-		    ['data3', 70, 100, 390, 295, 170, 220],
-		    ['data4', 10, 340, 30, 290, 35, 20],
-		    ['data5', 0]
-		  ];
-
 
 	  var xaxis = function (date){
-		  var ini = new Date();
+		  var ini = new Date(new Date().setMinutes(0));
 		  var fin = new Date(new Date().setHours(ini.getHours()+1));
+		  fin = new Date(fin.setMinutes(0));
 		  var dates = ['x'];
 		  do{
 			  var aux = new Date(ini.setMinutes(ini.getMinutes()+1));
@@ -153,7 +192,8 @@ function generateLineChart (id, data){
 		  
 		  return dates;
 	  }
-	  data.push(xaxis(new Date()));
+	  var dates = xaxis(new Date());
+	  data.push(dates);
 	  splineChartConfig.data = {
 			  	x: 'x',
 			    columns: data,
@@ -164,10 +204,14 @@ function generateLineChart (id, data){
 		        x: {
 		            type: 'timeseries',
 		            tick: {
-		                format: '%H:%m'
+		                format: '%H:%M'
 		            },
-		            max: new Date(new Date().setHours(new Date().getHours()+1))
-		        }
+		            
+		            max: dates[61]
+		        },
+		        y: {
+		            min: 0
+		          }
 		    }
 	 
 	  splineChartConfig.color = {
