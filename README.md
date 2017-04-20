@@ -3,7 +3,7 @@
 Proof of concept deploying a Front-end application ued by KDS-Logs. 
 
 
-## Arquitecture
+## Architecture
 
 * NodeJS v6.10
 * Elasticsearch 1.7.5
