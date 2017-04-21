@@ -54,20 +54,24 @@ app.component('dashboardComponent', {
 			self.servicesEntries = {
 				availableOptions : [					
 					{
-						id : 'flume',
+						id : 'flume3',
 						name : 'Flume'
 					},
 					{
-						id : 'yarn',
-						name : 'Yarn'
-					},
-					{
-						id : 'zookeeper',
+						id : 'zookeeper3',
 						name : 'Zookeeper'
-					}
+					},					
+					{
+						id : 'spark',
+						name : 'Spark'
+					},					
+					{
+						id : 'flink',
+						name : 'Flink'
+					},
 				],
 				selectedOption : {
-					id : 'flume',
+					id : 'flume3',
 					name : 'Flume'
 				}
 			};

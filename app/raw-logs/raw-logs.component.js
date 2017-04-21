@@ -22,17 +22,28 @@ app.component('rawLogs',{
                     {id: 'warn', name: 'Warning'}
                 ]
             };
-            self.servicesEntries  = {
-                availableOptions: [
-                    {id: 'yarn', name: 'Yarn'},
-                    {id: 'zookeeper', name: 'Zookeeper'},
-                    {id: 'flume', name: 'Flume'},
-                ],
-                selectedOption : {
-					id : 'yarn',
-					name : 'Yarn'
-				}
-            };
+			self.servicesEntries = {
+					availableOptions : [					
+						{
+							id : 'flume3',
+							name : 'Flume'
+						},
+						{
+							id : 'zookeeper3',
+							name : 'Zookeeper'
+						},					{
+							id : 'spark',
+							name : 'Spark'
+						},					{
+							id : 'flink',
+							name : 'Flink'
+						},
+					],
+					selectedOption : {
+						id : 'flume3',
+						name : 'Flume'
+					}
+				};
 
             self.payLoad = "";
             self.dateFrom = "";
@@ -166,3 +177,14 @@ function selectDirective($timeout) {
 		}
 	}
 }
+
+app.filter('parsePayload', function() {
+	return function(input) {
+		var split = input.split("\",\"\\t");
+		if(split.length <= 1) return [input];
+		var ret = []
+		split.forEach (i => ret.push(i.replace('"',''))  );
+		return ret;
+	}
+});
+

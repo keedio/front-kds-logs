@@ -84,7 +84,7 @@ p {
 							<dt>Fqcn</dt>
 							<dd>{{log._source.log.fqcn}}</dd>
 							<dt>Pay Load</dt>
-							<dd>{{log._source.log.payload}}</dd>
+							<dd ng-repeat="payload in log._source.log.payload | parsePayload"}}>{{payload}}</dd>
 						</dl>
 					</div>
 				</div>
